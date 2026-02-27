@@ -1,0 +1,36 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# SQLite Database
+*.db
+*.db-shm
+*.db-wal
+
+# Entity Framework Migrations Snapshot
+Migrations/*Snapshot.cs
+
+# Publish output
+publish/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt

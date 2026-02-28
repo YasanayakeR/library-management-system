@@ -8,11 +8,11 @@ using backend.Data;
 
 #nullable disable
 
-namespace Backend.Migrations
+namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260227050922_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260228060507_AddCategory")]
+    partial class AddCategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace Backend.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
@@ -43,6 +46,21 @@ namespace Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("backend.Models.Category", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
                 });
 #pragma warning restore 612, 618
         }

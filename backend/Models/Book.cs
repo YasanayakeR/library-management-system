@@ -16,4 +16,6 @@ public class Book
 
     [StringLength(500)]
     public string? Description { get; set; }
+    
+    public Guid CategoryId{ get; set; }
 }

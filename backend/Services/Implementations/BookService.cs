@@ -33,7 +33,8 @@ namespace backend.Services
             {
                 Title = bookDto.Title,
                 Author = bookDto.Author,
-                Description = bookDto.Description
+                Description = bookDto.Description,
+                CategoryId = bookDto.CategoryId
             };
             
             _context.Books.Add(book);
@@ -52,6 +53,7 @@ namespace backend.Services
             existingBook.Title = bookDto.Title;
             existingBook.Author = bookDto.Author;
             existingBook.Description = bookDto.Description;
+            existingBook.CategoryId = bookDto.CategoryId;
             
             await _context.SaveChangesAsync();
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Services;
 using backend.DTOs;
 
-namespace Backend.Controllers
+namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

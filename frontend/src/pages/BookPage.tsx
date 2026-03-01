@@ -3,7 +3,7 @@ import { getBooks, deleteBook } from "../services/bookService";
 import { getCategories } from "../services/categoryService";
 import { Book } from "../types/Book";
 import { Category } from "../types/Category";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.png"
 import BookCard from "../components/BookCard";
 import AddBookModal from "../components/AddBook";
 import EditBookModal from "../components/EditBook";

@@ -1,6 +1,6 @@
 # Library Management System
 
-A full-stack web-based Library Management System developed using React (TypeScript) for the frontend and ASP.NET Core Web API for the backend.
+A full stack web based Library Management System developed using React (TypeScript) for the frontend and ASP.NET Core Web API for the backend.
 
 The system enables administrators to manage books and categories efficiently while ensuring secure authentication using JWT and BCrypt password hashing.
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
+import { login, getCurrentUser } from "../services/authService";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
 import illustration from "../assets/library_illustration.png";
@@ -10,6 +10,13 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = getCurrentUser();
+        if (user) {
+            navigate("/", { replace: true });
+        }
+    }, [navigate]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

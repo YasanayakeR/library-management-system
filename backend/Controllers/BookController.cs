@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Services;
 using backend.DTOs;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getBooks, deleteBook } from "../services/bookService";
 import { getCategories } from "../services/categoryService";
+import { logout } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 import { Book } from "../types/Book";
 import { Category } from "../types/Category";
 import logo from "../assets/logo.png"
@@ -8,9 +10,11 @@ import BookCard from "../components/BookCard";
 import AddBookModal from "../components/AddBook";
 import EditBookModal from "../components/EditBook";
 import DeleteConfirm from "../components/DeleteConfirm";
+import LogoutConfirm from "../components/LogoutConfirm";
 import { toast } from "react-toastify";
 
 export default function BooksPage() {
+  const navigate = useNavigate();
 
   const [books, setBooks] = useState<Book[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -18,6 +22,7 @@ export default function BooksPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [editBook, setEditBook] = useState<Book | null>(null);
   const [deleteBookId, setDeleteBookId] = useState<string | null>(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Search State
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,16 +73,26 @@ export default function BooksPage() {
 
   const handleCategoryChange = (catId: string) => {
     setSelectedCategory(catId);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
+  };
+
+  const handleLogout = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = () => {
+    logout();
+    toast.info("Logged out successfully");
+    navigate("/login");
   };
 
   return (
-    <div className="min-h-screen bg-theme-background py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-theme-background py-8 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto">
 
         <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-6">
@@ -95,15 +110,28 @@ export default function BooksPage() {
             </div>
           </div>
 
-          <button
-            onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 bg-theme-primary hover:bg-theme-primary/95 text-white font-bold px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            Add New Book
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowAdd(true)}
+              className="flex items-center gap-2 bg-theme-primary hover:bg-theme-primary/95 text-white font-bold px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Add New Book
+            </button>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-white text-theme-primary border-2 border-theme-primary/10 hover:border-theme-primary/20 font-bold px-6 py-3.5 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
+              title="Logout"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 group-hover:text-amber-500 transition-colors">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+              </svg>
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          </div>
         </div>
 
         {/* Search Bar */}
@@ -227,6 +255,13 @@ export default function BooksPage() {
           <DeleteConfirm
             onClose={() => setDeleteBookId(null)}
             onConfirm={handleDeleteConfirm}
+          />
+        }
+
+        {showLogoutConfirm &&
+          <LogoutConfirm
+            onClose={() => setShowLogoutConfirm(false)}
+            onConfirm={confirmLogout}
           />
         }
       </div>
